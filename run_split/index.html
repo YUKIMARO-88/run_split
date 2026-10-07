@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>Run Split</title>
+<meta name="description" content="GPSで走行距離を測り、1kmごとのラップタイムを自動記録">
+<meta name="theme-color" content="#0b0b0c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Run Split">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div id="gps" class="pill bad"><span class="dot"></span><span id="gpsText">GPS 未取得</span></div>
+  <div class="top-r">
+    <button id="voiceBtn" class="icon-btn" aria-label="音声読み上げ切替">🔊</button>
+    <button id="histBtn" class="icon-btn" aria-label="履歴">≡</button>
+  </div>
+</header>
+
+<div id="warn" class="warn" hidden></div>
+
+<main>
+  <section class="big">
+    <div class="label">距離</div>
+    <div class="dist"><span id="dist">0.00</span><small>km</small></div>
+    <div class="row2">
+      <div><div class="label">タイム</div><div id="time" class="num">0:00</div></div>
+      <div><div class="label">現在ペース /km</div><div id="pace" class="num">--:--</div></div>
+    </div>
+  </section>
+
+  <section class="lap-now">
+    <div class="lap-head">
+      <span id="lapNo">LAP 1</span>
+      <span id="lapTime" class="num">0:00</span>
+    </div>
+    <div class="bar"><div id="lapBar"></div></div>
+    <div class="lap-sub"><span id="lapDist">0 m</span><span id="lapTarget">/ 1000 m</span></div>
+  </section>
+
+  <section class="setup" id="setup">
+    <label>ラップ距離
+      <select id="lapSel">
+        <option value="1000" selected>1 km</option>
+        <option value="500">500 m</option>
+        <option value="400">400 m</option>
+        <option value="200">200 m</option>
+      </select>
+    </label>
+  </section>
+
+  <section>
+    <table class="laps" id="lapTable" hidden>
+      <thead><tr><th>LAP</th><th>タイム</th><th>前との差</th></tr></thead>
+      <tbody id="lapBody"></tbody>
+    </table>
+  </section>
+</main>
+
+<footer class="controls">
+  <button id="startBtn" class="btn go">START</button>
+  <button id="pauseBtn" class="btn sub" hidden>一時停止</button>
+  <button id="resumeBtn" class="btn go" hidden>再開</button>
+  <button id="stopBtn" class="btn stop" hidden><span class="fill"></span><span class="t">長押しで終了</span></button>
+  <button id="newBtn" class="btn go" hidden>新しく計測</button>
+</footer>
+
+<dialog id="histDlg">
+  <div class="dlg-head"><b>履歴</b><button class="icon-btn" id="histClose">✕</button></div>
+  <div id="histList"></div>
+</dialog>
+
+<script src="tracker.js"></script>
+<script src="sim.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
